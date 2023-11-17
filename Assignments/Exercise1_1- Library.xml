@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<Library> 
+    <Catatlogues catgegory="Technical books"> 
+        <title>Basic Electrical and Electronics Engineering</title> 
+        <author>Ramana Pilla, Gulivindala Suresh and Venkata Lalitha Narla<author> 
+        <ISBN>9789358702552</ISBN>   
+    </Catatlogues>
+    <Catatlogues catgegory="Technical books"> 
+        <title>Modern Physics</title> 
+        <author>B L Theraja<author> 
+        <ISBN>9788121901635</ISBN> 
+    </Catatlogues>
+    <Catatlogues catgegory="Cookery books"> 
+        <name>Real Life Recipes</name> 
+        <author>Tom Kerridge<author> 
+        <ISBN>1472981642</ISBN> 
+    </Catalogues> 
+    <Catatlogues catgegory="Cookery books"> 
+        <name>One: Simple One-Pan Wonders</name> 
+        <author>Jamie Oliver <author> 
+        <ISBN>0241431107</ISBN> 
+    </Catalogues> 
+</Library> 
