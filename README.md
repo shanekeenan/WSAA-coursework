@@ -1,6 +1,9 @@
 # data-representation-coursework
 Coding for assignments and lab for Data Representation module of semester 2 HDip in Data Analytics at ATU 
 
+Author: Shane Keenan 
+
+
 
 
 # Exercise 1.1
@@ -14,6 +17,15 @@ Each catalogue can contain a number of books (say 2 for the purpose of this exer
 Books will have an ISBN, title and author.
 
 Upload your .xml file to your github repository called data-representation-coursework
+
+
+Status: complete 
+Date: 17/11/2023
+
+
+
+
+
 
 
 
