@@ -1,4 +1,4 @@
-# assignment 3 
+# Assignment 3 from Topic 04 Reading apis in the wild
 # Author: Shane Keenan 
 # date: 23/02/2024 
 # status: complete
