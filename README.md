@@ -1,18 +1,24 @@
-# data-representation-coursework
-Coding for assignments and lab for Data Representation module of semester 2 HDip in Data Analytics at ATU 
-
+# Web services and applications (WSAA) coursework
+Coding for assignments and lab for Web services and applications (WSAA) module semester 3 HDip in Data Analytics at ATU 
 Author: Shane Keenan 
 
 
+# Topic02 Representing Data
 
+Assignment
+Using the URL below
 
-# Exercise 1.1
+https://api.open-meteo.com/v1/forecast?latitude=53.82&longitude=-9.5&current=temperature_2m
 
-Create an XML file that stores data for a library (You can create this manually, I am not asking you to create a program to do this). 
-The library has two catalogues (technical books, and for cookery books).
-Each catalogue can contain a number of books (say 2 for the purpose of this exercise) . 
-Books will have an ISBN, title and author.
-Upload your .xml file to your github repository called data-representation-coursework
+Write a python program called currentweather.py that will print out the current temperature on the console (and only the temperature)
+
+I have set the lat/long to my location, you may use that or a different location.
+
+Last few marks:
+Look at the documentation (below) and print out the current wind direction (10m) as well.
+
+🌤️ Free Open-Source Weather API | Open-Meteo.com
+
 
 
 Status: complete 
@@ -20,12 +26,13 @@ Date: 17/11/2023
 
 
 
-# Assignment 2 
+# Topic03 Data Transfer
+
+Assignment 
 
 Quiz - HTTP and URLs 
 status: complete 
-date: 17/11/2023
-
+date: 23/02/2024
 
 
 
@@ -39,6 +46,8 @@ This program should not be a long one
 I don't need you to reformat or analyse the data in any way
 It should be about 10ish lines long (I have not counted)
 You will need to find the dataset in CSO.ie, try economic and then finance, then finance indicators. yes it is difficult to find, that is part of the task, actually the easiest way to find it is search for it.
+
+
 
 # Assignment 4 
 
