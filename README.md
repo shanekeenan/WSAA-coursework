@@ -1,5 +1,7 @@
 # Web services and applications (WSAA) coursework
-Assignments and lab python code for Web services and applications (WSAA) module semester 3 HDip in Data Analytics at ATU 
+Assignments and lab python code for Web services and applications (WSAA) module with lecturer Andrew Beatty 
+
+Semester 2, Higher Diploma in Science in Data Analytics at ATU, Galway, 2023/24. 
 Author: Shane Keenan 
 
 
@@ -20,7 +22,7 @@ This repository contains two folders assignments and labs -
 2. labs - contains code for the weekly labs 
 
 
-## running the code 
+## Running the code 
 
 steps to create:  
 
@@ -33,7 +35,7 @@ steps to create:
 7. Create necesary folders and files
 8. Commit all and push to repo 
 
-## required python packages
+## Required python packages
 
 import pandas as pd
 import numpy as np
