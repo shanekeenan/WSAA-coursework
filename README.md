@@ -3,6 +3,74 @@ Assignments and lab python code for Web services and applications (WSAA) module 
 Author: Shane Keenan 
 
 
+## About 
+
+This repository contains two folders assignments and labs - 
+
+1. assignments - contains code for weekly assignments 
+    - currentweather.py   (Week 2 - Topic02 Representing Data)
+    - assignment03-cso.py (Week 4 - Topic 04 Reading apis in the wild)
+    - assignment04-github.py    (Week 5 - Topic 05 Authentication)
+    - 
+    - 
+    - 
+    - 
+    - 
+
+2. labs - contains code for the weekly labs 
+
+
+## running the code 
+
+steps to create:  
+
+1. Install Anaconda 
+2. Install visual studio code 
+3. create a github account 
+4. create public repository "WSAA-coursework" with README.md and .gitignore file
+5. Sign into github using VScode 
+6. Clone repository to PC 
+7. Create necesary folders and files
+8. Commit all and push to repo 
+
+## required python packages
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import random 
+from PIL import Image
+import os
+
+import numpy as np 
+import pandas as pd 
+import matplotlib.pyplot as plt 
+import seaborn as sns 
+import random 
+import os
+from scipy.stats import norm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Topic02 Representing Data
 
 Assignment
@@ -18,15 +86,12 @@ Status: complete
 Date: 17/11/2023
 
 
-
 # Topic03 Data Transfer
 
 Assignment 
-
 Quiz - HTTP and URLs 
-status: complete 
+status: complete - 100 % yeah !  
 date: 23/02/2024
-
 
 
 # Assignment 3 from Topic 04 Reading apis in the wild
