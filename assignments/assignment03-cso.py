@@ -10,7 +10,7 @@ url = "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/FIQ
 response = requests.get(url)
 #print(response.status_code)
 
-print(response.text)
+#print(response.text)
 data = json.loads(response.text)
 with open("cso.json", "w") as cso_json:
     json.dump(data, cso_json, indent = 4) # using the indent agrument formats the .json file.. avoids having to use shift+alt+f 
