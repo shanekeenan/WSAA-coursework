@@ -22,7 +22,7 @@ Create a repository called WSAA-assignments, save the file in there and copy a l
 ''' 
 import requests
 import json
-# change coordinates to Mace Head weather station in Carna 
+# change coordinates to Mace Head MET Eireann weather station in Carna 
 url = "https://api.open-meteo.com/v1/forecast?latitude=53.326&longitude=-9.9&current=temperature_2m&wind_direction_10m"
 response = requests.get(url)
 

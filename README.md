@@ -2,6 +2,7 @@
 Assignments and lab python code for Web services and applications (WSAA) module with lecturer Andrew Beatty 
 
 Semester 2, Higher Diploma in Science in Data Analytics at ATU, Galway, 2023/24. 
+
 Author: Shane Keenan 
 
 
