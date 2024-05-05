@@ -1,26 +1,13 @@
-# Web services and applications (WSAA) coursework
-Assignments and lab python code for Web services and applications (WSAA) module with lecturer Andrew Beatty 
 
+# Web services and applications (WSAA) project 
+Code for Web services and applications (WSAA) project with lecturer Andrew Beatty 
 Semester 2, Higher Diploma in Science in Data Analytics at ATU, Galway, 2023/24. 
-
 Author: Shane Keenan 
 
 
 ## About 
 
-This repository contains two folders assignments and labs - 
-
-1. assignments - contains code for weekly assignments 
-    - currentweather.py   (Week 2 - Topic02 Representing Data)
-    - assignment03-cso.py (Week 4 - Topic 04 Reading apis in the wild)
-    - assignment04-github.py    (Week 5 - Topic 05 Authentication)
-    - 
-    - 
-    - 
-    - 
-    - 
-
-2. labs - contains code for the weekly labs 
+This repository contains  - 
 
 
 ## Running the code 
