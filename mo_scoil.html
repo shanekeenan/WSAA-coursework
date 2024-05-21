@@ -1,0 +1,772 @@
+<html>
+    <head>
+        <title>Mo Scoil </title>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <style>
+            body {
+              font-family: Arial, sans-serif; 
+            }
+            label, input, select, button {
+              font-family: Arial, sans-serif; 
+            }
+            label {
+              font-weight: bold; 
+            }
+            #school {
+            font-size: 12px; 
+            }
+
+            .logo {
+            width: 120px; 
+            height: auto; 
+            float: right; 
+            }
+             
+            .container {
+            display: flex;
+            justify-content: space-between; 
+            align-items: flex-start; 
+            }
+            .search-section {
+            margin-right: 50px; 
+            }
+            #div_header {
+                background-image: url('https://mcdn.wallpapersafari.com/medium/83/18/GFOxqr.jpg'); 
+                background-image: url('https://mcdn.wallpapersafari.com/medium/24/91/wITukH.jpg');
+                background-size: cover; 
+                background-repeat: no-repeat; 
+                background-position: right; 
+                color: whitesmoke ; 
+                padding: 0px; 
+
+            }
+         
+            a {
+            color: blue; 
+            text-decoration: none; 
+            }
+            a:hover {
+            color: red; 
+            text-decoration: underline; 
+            }
+          </style>
+    </head>
+    <body>
+        
+        <div id = "div_header"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> <h1> Primary schools in Ireland</h1> </div>
+        <div>
+            <img src="https://www.gov.ie/static/_reboot/_reboot_app/img/Image_Logo.png" alt="gov.ie" class="logo"><br/>
+            Data sourced from Government of Ireland website: <a href="https://www.gov.ie/en/collection/primary-schools/">here</a>       
+        </div>        
+        <hr>
+
+        <div class="container">
+            <div class="search-section">
+                <button id = "button-showCreate" onclick="showCreate()">Create a new school </button>
+            </div>
+            <div class="search-section" id = "search">
+                <span><b>Search by county</b></span>
+                <br/>
+                <input id="name" type="text" value="Enter county"/>
+                <button onclick="buttonClicked()">Search</button>
+                <div id="output">Output here</div>
+            </div>
+            <div class="search-section" id = "search2">
+                <span><b>Search by name</b></span>
+                <br/>
+                <input id="name2" type="text" value="Enter school name"/>
+                <button onclick="buttonClicked()">Search</button>
+                <div id="output4">Output here</div>
+            </div>
+        </div><hr>
+
+        <br/><br/></div>
+      
+        <script>  
+            var baseUrl = "http://127.0.0.1:5000";
+            
+            
+            function showUpdate(buttonElement){ 
+                document.getElementById('search').style.display="none" 
+                document.getElementById('search2').style.display="none" 
+                document.getElementById('button-showCreate').style.display="none" 
+                document.getElementById('SchoolTable').style.display="none" 
+                document.getElementById('create_update_school').style.display="block" 
+                document.getElementById('createLabel').style.display="none" 
+                document.getElementById('updateLabel').style.display="inline"
+                document.getElementById('button-doCreate').style.display="none"
+                document.getElementById('button-doUpdate').style.display="block" 
+                var rowElement = buttonElement.parentNode.parentNode 
+                var school = getSchoolFromRow(rowElement)
+
+                populateFormWithSchool(school)
+
+            }   
+        
+            function showCreate(){ 
+                document.getElementById('search').style.display="none" 
+                document.getElementById('search2').style.display="none" 
+                document.getElementById('button-showCreate').style.display="none" 
+                document.getElementById('SchoolTable').style.display="none" 
+                document.getElementById('create_update_school').style.display="block"
+                document.getElementById('createLabel').style.display="inline" 
+                document.getElementById('updateLabel').style.display="none" 
+                document.getElementById('button-doCreate').style.display="block" 
+                document.getElementById('button-doUpdate').style.display="none" 
+            }
+        
+            function showViewAll(){ 
+                console.log("return to main menu ")
+                document.getElementById('search').style.display="block" 
+                document.getElementById('search2').style.display="block" 
+                document.getElementById('button-showCreate').style.display="block" 
+                document.getElementById('SchoolTable').style.display="block"  
+                document.getElementById('create_update_school').style.display="none"
+                document.getElementById('createLabel').style.display="none" 
+                document.getElementById('updateLabel').style.display="none" 
+                document.getElementById('button-doCreate').style.display="none" 
+                document.getElementById('button-doUpdate').style.display="none" 
+            }
+        
+            function doCreate(){ 
+                event.preventDefault();
+                var school = getschoolFromForm()
+                
+                console.log("creating a school")
+                
+                console.log(school)
+                addschoolToTable(school)
+                clearForm()
+                showViewAll() 
+            
+            }
+        
+            function addschoolToTable(school){
+                var tableElement = document.getElementById('SchoolTable') 
+                var rowElement = tableElement.insertRow(-1) 
+                
+                var cell1 = rowElement.insertCell(0);
+                var cell2 = rowElement.insertCell(1);
+                var cell3 = rowElement.insertCell(2);
+                var cell4 = rowElement.insertCell(3);
+                var cell5 = rowElement.insertCell(4);
+                var cell6 = rowElement.insertCell(5);
+                var cell7 = rowElement.insertCell(6);
+                var cell8 = rowElement.insertCell(7);
+                var cell9 = rowElement.insertCell(8);
+                var cell10 = rowElement.insertCell(9);
+                var cell11 = rowElement.insertCell(10);
+                var cell12 = rowElement.insertCell(11);
+                var cell13 = rowElement.insertCell(12);
+                var cell14 = rowElement.insertCell(13);
+                var cell15 = rowElement.insertCell(14);
+                var cell16 = rowElement.insertCell(15);
+                var cell17 = rowElement.insertCell(16);
+                var cell18 = rowElement.insertCell(17);
+                var cell19 = rowElement.insertCell(18);
+                var cell20 = rowElement.insertCell(19);
+                var cell21 = rowElement.insertCell(20);
+                var cell22 = rowElement.insertCell(21);
+                var cell23 = rowElement.insertCell(22);
+                var cell24 = rowElement.insertCell(23);
+                var cell25 = rowElement.insertCell(24);
+                var cell26 = rowElement.insertCell(25);
+                
+                cell1.innerHTML = school.academic_year_enrolment;
+                cell2.innerHTML = school.roll_number;
+                cell3.innerHTML = school.official_name;
+                cell4.innerHTML = school.address_line1;
+                cell5.innerHTML = school.address_line2;
+                cell6.innerHTML = school.address_line3;
+                cell7.innerHTML = school.address_line4;
+                cell8.innerHTML = school.county_description;
+                cell9.innerHTML = school.eircode;
+                cell10.innerHTML = school.latitude;
+                cell11.innerHTML = school.longitude;
+                cell12.innerHTML = school.email;
+                cell13.innerHTML = school.phone_number;
+                cell14.innerHTML = school.principal_name;
+                cell15.innerHTML = school.local_authority_description;
+                cell16.innerHTML = school.deis;
+                cell17.innerHTML = school.irish_classification_description;
+                cell18.innerHTML = school.gaeltacht_indicator;
+                cell19.innerHTML = school.island;
+                cell20.innerHTML = school.ethos_description;
+                cell21.innerHTML = school.female;
+                cell22.innerHTML = school.male;
+                cell23.innerHTML = school.total;            
+                cell24.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
+                cell25.innerHTML = '<button onclick=doDelete(this)>delete</button>'
+            }
+
+
+        
+        
+            function getschoolFromForm() {
+                var form = document.getElementById('create_update_school');
+
+                var school = {};
+                school.academic_year_enrolment = form.querySelector('input[id="academic_year_enrolment"]').value;
+                school.roll_number = form.querySelector('input[id="roll_number"]').value;
+                school.official_name = form.querySelector('input[id="official_name"]').value;
+                school.address_line1 = form.querySelector('input[id="address_line1"]').value;
+                school.address_line2 = form.querySelector('input[id="address_line2"]').value;
+                school.address_line3 = form.querySelector('input[id="address_line3"]').value;
+                school.address_line4 = form.querySelector('input[id="address_line4"]').value;
+                school.county_description = form.querySelector('select[id="county_description"]').value;
+                school.eircode = form.querySelector('input[id="eircode"]').value;
+                school.latitude = form.querySelector('input[id="latitude"]').value; 
+                school.longitude = form.querySelector('input[id="longitude"]').value; 
+                school.email = form.querySelector('input[id="email"]').value;
+                school.phone_number = form.querySelector('input[id="phone_number"]').value;
+                school.principal_name = form.querySelector('input[id="principal_name"]').value;
+                school.local_authority_description = form.querySelector('input[id="local_authority_description"]').value;
+
+                var deisOptions = form.querySelectorAll('input[name="deis"]');
+                for (var i = 0; i < deisOptions.length; i++) {
+                    if (deisOptions[i].checked) {
+                        school.deis = deisOptions[i].value;
+                        break;
+                    }
+                }
+
+                school.irish_classification_description = form.querySelector('select[id="irish_classification_description"]').value;
+
+                var gaeltachtOptions = form.querySelectorAll('input[name="gaeltacht_indicator"]');
+                for (var i = 0; i < gaeltachtOptions.length; i++) {
+                    if (gaeltachtOptions[i].checked) {
+                        school.gaeltacht_indicator = gaeltachtOptions[i].value;
+                        break;
+                    }
+                }
+
+                var islandOptions = form.querySelectorAll('input[name="island"]');
+                for (var i = 0; i < islandOptions.length; i++) {
+                    if (islandOptions[i].checked) {
+                        school.island = islandOptions[i].value;
+                        break;
+                    }
+                }
+
+                school.ethos_description = form.querySelector('select[id="ethos_description"]').value;
+                school.female = form.querySelector('input[id="female"]').value;
+                school.male = form.querySelector('input[id="male"]').value;
+                school.total = form.querySelector('input[id="total"]').value;
+
+                return school;
+            }
+
+      
+            function getSchoolFromRow(rowElement) {
+                var school = {};
+
+                school.academic_year_enrolment = rowElement.cells[0].textContent;
+                school.roll_number = rowElement.cells[1].textContent;
+                school.official_name = rowElement.cells[2].textContent;
+                school.address_line1 = rowElement.cells[3].textContent;
+                school.address_line2 = rowElement.cells[4].textContent;
+                school.address_line3 = rowElement.cells[5].textContent;
+                school.address_line4 = rowElement.cells[6].textContent;
+                school.county_description = rowElement.cells[7].textContent;
+                school.eircode = rowElement.cells[8].textContent;
+                school.latitude = rowElement.cells[9].textContent;
+                school.longitude = rowElement.cells[10].textContent;
+                school.email = rowElement.cells[11].textContent;
+                school.phone_number = rowElement.cells[12].textContent;
+                school.principal_name = rowElement.cells[13].textContent;
+                school.local_authority_description = rowElement.cells[14].textContent;
+                school.deis = rowElement.cells[15].textContent;
+                school.irish_classification_description = rowElement.cells[16].textContent;
+                school.gaeltacht_indicator = rowElement.cells[17].textContent;
+                school.island = rowElement.cells[18].textContent;
+                school.ethos_description = rowElement.cells[19].textContent;
+                school.female = rowElement.cells[20].textContent;
+                school.male = rowElement.cells[21].textContent;
+                school.total = rowElement.cells[22].textContent;
+
+                return school;
+            }
+       
+            function populateFormWithSchool(school) {
+                var form = document.getElementById('create_update_school');
+
+                // Disable and populate roll number 
+                form.querySelector('input[id="roll_number"]').disabled = true;
+                form.querySelector('input[id="academic_year_enrolment"]').value = school.academic_year_enrolment;
+               
+                form.querySelector('input[id="roll_number"]').value = school.roll_number;
+                form.querySelector('input[id="official_name"]').value = school.official_name;
+                form.querySelector('input[id="address_line1"]').value = school.address_line1;
+                form.querySelector('input[id="address_line2"]').value = school.address_line2;
+                form.querySelector('input[id="address_line3"]').value = school.address_line3;
+                form.querySelector('input[id="address_line4"]').value = school.address_line4;
+                form.querySelector('select[id="county_description"]').value = school.county_description;
+                form.querySelector('input[id="eircode"]').value = school.eircode;
+                form.querySelector('input[id="latitude"]').value = school.latitude;
+                form.querySelector('input[id="longitude"]').value = school.longitude;
+                form.querySelector('input[id="email"]').value = school.email;
+                form.querySelector('input[id="phone_number"]').value = school.phone_number;
+                form.querySelector('input[id="principal_name"]').value = school.principal_name;
+                form.querySelector('input[id="local_authority_description"]').value = school.local_authority_description;
+
+                
+                form.querySelector('input[id="deis_y"]').checked = (school.deis === 'Y');
+                form.querySelector('input[id="deis_n"]').checked = (school.deis !== 'Y');
+                form.querySelector('input[id="gaeltacht_y"]').checked = (school.gaeltacht_indicator === 'Y');
+                form.querySelector('input[id="gaeltacht_n"]').checked = (school.gaeltacht_indicator !== 'Y');
+                form.querySelector('input[id="island_y"]').checked = (school.island === 'Y');
+                form.querySelector('input[id="island_n"]').checked = (school.island !== 'Y');
+
+                       
+                console.log('Ethos Description:', school.ethos_description);
+                var ethosDropdown = form.querySelector('select[id="ethos_description"]');
+                for (var i = 0; i < ethosDropdown.options.length; i++) {
+                    console.log('Ethos Option:', ethosDropdown.options[i].value);
+                    if (ethosDropdown.options[i].value === school.ethos_description) {
+                        ethosDropdown.selectedIndex = i;
+                        console.log('Ethos Selected Index:', i);
+                        break;
+                    }
+                }
+
+                console.log('County Description:', school.county_description);
+                var countyDropdown = form.querySelector('select[id="county_description"]');
+                for (var i = 0; i < countyDropdown.options.length; i++) {
+                    console.log('County Option:', countyDropdown.options[i].value);
+                    if (countyDropdown.options[i].value === school.county_description) {
+                        countyDropdown.selectedIndex = i;
+                        console.log('County Selected Index:', i);
+                        break;
+                    }
+                }
+
+                console.log('Irish Classification Description:', school.irish_classification_description);
+                var irishClassificationDropdown = form.querySelector('select[id="irish_classification_description"]');
+                for (var i = 0; i < irishClassificationDropdown.options.length; i++) {
+                    console.log('Irish Classification Option:', irishClassificationDropdown.options[i].value);
+                    if (irishClassificationDropdown.options[i].value === school.irish_classification_description) {
+                        irishClassificationDropdown.selectedIndex = i;
+                        console.log('Irish Classification Selected Index:', i);
+                        break;
+                    }
+                }
+
+                // Populate student counts
+                form.querySelector('input[id="female"]').value = school.female;
+                form.querySelector('input[id="male"]').value = school.male;
+                form.querySelector('input[id="total"]').value = school.total;
+            }
+        
+            function doUpdate() { 
+                
+                event.preventDefault();
+                
+                var school = getschoolFromForm();
+                var table = document.getElementById('SchoolTable'); 
+                var rowElement = findRowByRollNumber(table, school.roll_number);
+                
+                
+                setSchoolInRow(rowElement, school);
+                console.log("Updating a school");
+                
+                
+                clearForm();
+                showViewAll();
+            }
+
+            function findRowByRollNumber(table, rollNumber) {
+                for (var i = 0, row; row = table.rows[i]; i++) {
+                    if (row.cells[1] && row.cells[1].textContent === rollNumber) { // roll_number is in the second cell (index 1)
+                        return row;
+                    }
+                }
+                return null;
+            }
+            
+        
+
+            function doDelete(rollNumber) {
+                var table = document.getElementById('schoolTable');
+                var rowElement = findRowByRollNumber(table, rollNumber);
+            
+                if (rowElement) {
+                    var rowIndex = rowElement.rowIndex;
+                    table.deleteRow(rowIndex);
+                    console.log("Deleted row with roll number:", rollNumber);
+                } else {
+                    console.error("Row not found for roll number:", rollNumber);
+                }
+            }
+
+
+
+       
+            function setSchoolInRow(rowElement, school) {
+                rowElement.cells[0].firstChild.textContent = school.academic_year_enrolment;
+                rowElement.cells[1].firstChild.textContent = school.roll_number;
+                rowElement.cells[2].firstChild.textContent = school.official_name;
+                rowElement.cells[3].firstChild.textContent = school.address_line1;
+                rowElement.cells[4].firstChild.textContent = school.address_line2;
+                rowElement.cells[5].firstChild.textContent = school.address_line3;
+                rowElement.cells[6].firstChild.textContent = school.address_line4;
+                rowElement.cells[7].firstChild.textContent = school.county_description;
+                rowElement.cells[8].firstChild.textContent = school.eircode;
+                rowElement.cells[9].firstChild.textContent = school.latitude;
+                rowElement.cells[10].firstChild.textContent = school.longitude;
+                rowElement.cells[11].firstChild.textContent = school.email;
+                rowElement.cells[12].firstChild.textContent = school.phone_number;
+                rowElement.cells[13].firstChild.textContent = school.principal_name;
+                rowElement.cells[14].firstChild.textContent = school.local_authority_description;
+                rowElement.cells[15].firstChild.textContent = school.deis === 'Y' ? 'Yes' : 'No';
+                rowElement.cells[16].firstChild.textContent = school.irish_classification_description;
+                rowElement.cells[17].firstChild.textContent = school.gaeltacht_indicator === 'Y' ? 'Yes' : 'No';
+                rowElement.cells[18].firstChild.textContent = school.island === 'Y' ? 'Yes' : 'No';
+                rowElement.cells[19].firstChild.textContent = school.ethos_description;
+                rowElement.cells[20].firstChild.textContent = school.female;
+                rowElement.cells[21].firstChild.textContent = school.male;
+                rowElement.cells[22].firstChild.textContent = school.total;
+            }
+        
+        
+
+        
+            function clearForm() {
+                console.log("clearing the form");
+                var form = document.getElementById('create_update_school');
+        
+                form.querySelector('input[id="academic_year_enrolment"]').value = "";
+                form.querySelector('input[id="roll_number"]').value = "";
+                form.querySelector('input[id="official_name"]').value = "";
+                form.querySelector('input[id="address_line1"]').value = "";
+                form.querySelector('input[id="address_line2"]').value = "";
+                form.querySelector('input[id="address_line3"]').value = "";
+                form.querySelector('input[id="address_line4"]').value = "";
+                form.querySelector('select[id="county_description"]').value = "none";
+                form.querySelector('input[id="eircode"]').value = "";
+                form.querySelector('input[id="latitude"]').value = "";
+                form.querySelector('input[id="longitude"]').value = "";
+                form.querySelector('input[id="email"]').value = "";
+                form.querySelector('input[id="phone_number"]').value = "";
+                form.querySelector('input[id="principal_name"]').value = "";
+                form.querySelector('input[id="local_authority_description"]').value = "";
+                
+                var deisOptions = form.querySelectorAll('input[name="deis"]');
+                deisOptions.forEach(option => {
+                    option.checked = false;
+                });
+        
+                form.querySelector('select[id="irish_classification_description"]').value = "none";
+        
+                var gaeltachtOptions = form.querySelectorAll('input[name="Y"]');
+                gaeltachtOptions.forEach(option => {
+                    option.checked = false;
+                });
+        
+                var islandOptions = form.querySelectorAll('input[name="island"]');
+                islandOptions.forEach(option => {
+                    option.checked = false;
+                });
+        
+                form.querySelector('select[id="ethos_description"]').value = "none";
+                form.querySelector('input[id="female"]').value = "";
+                form.querySelector('input[id="male"]').value = "";
+                form.querySelector('input[id="total"]').value = "";
+            }
+        
+        
+        
+        
+            function getAllAjax(){
+                $.ajax({
+                    "url": "http://127.0.0.1:5000/schools",
+                    "method":"GET",
+                    "data":"",
+                    "dataType": "JSON",
+                    "success":function(result){
+                        //console.log(result);
+                        for (school of result){
+                            addschoolToTable(school);
+                        }
+                        
+                    },
+                    "error":function(xhr,status,error){
+                        console.log("error: "+status+" msg:"+error);
+                    }
+                });
+
+            }
+            function createSchoolAjax(school){
+                //var book = {"title":"yoto", "author":"momo","price":800}
+                console.log(JSON.stringify(school));
+                $.ajax({
+                    "url": "/schools",
+                    "method":"POST",
+                    "data":JSON.stringify(schools),
+                    "dataType": "JSON",
+                    contentType: "application/json; charset=utf-8",
+                    "success":function(result){
+                        //console.log(result);
+                        schoold.id = result.id
+                        addBookToTable(school)
+                        clearForm()
+                        showViewAll()
+                    },
+                    "error":function(xhr,status,error){
+                        console.log("error: "+status+" msg:"+error);
+                    }
+                });
+            }
+            function updateSchoolAjax(school){
+                //var book = {"title":"yoto", "author":"momo","price":800}
+                console.log(JSON.stringify(school));
+                $.ajax({
+                    "url": "/schools/"+encodeURI(school.id),
+                    "method":"PUT",
+                    "data":JSON.stringify(school),
+                    "dataType": "JSON",
+                    contentType: "application/json; charset=utf-8",
+                    "success":function(result){
+                    // console.log(result);
+                        
+                    },
+                    "error":function(xhr,status,error){
+                        console.log("error: "+status+" msg:"+error);
+                    }
+                });
+            }
+            function deleteSchoolAjax(id){
+                
+                //console.log(JSON.stringify('deleting '+id));
+                $.ajax({
+                    "url": "/schools/"+encodeURI(id),
+                    "method":"DELETE",
+                    "data":"",
+                    "dataType": "JSON",
+                    contentType: "application/json; charset=utf-8",
+                    "success":function(result){
+                        //console.log(result);
+                        
+                    },
+                    "error":function(xhr,status,error){
+                        console.log("error: "+status+" msg:"+error);
+                    }
+                });
+            }
+            // Call the function to load data when the page is ready
+        $(document).ready(function() {
+            getAllAjax();  // Load schools when the page is ready
+        });
+  
+        
+        </script>
+
+
+
+
+
+        <table id = "SchoolTable" class="table" border = "1" style="font-size: 12px;">
+            <tr>
+                <th>Academic Year (Enrolment) </th>
+                <th>Roll Number</th>
+                <th>Official Name</th>
+                <th>Address (Line 1)</th>
+                <th>Address (Line 2)</th>
+                <th>Address (Line 3)</th>
+                <th>Address (Line 4)</th>
+                <th>County Description</th>
+                <th>Eircode</th>
+                <th>School Latitude</th>
+                <th>School Longitude</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Principal Name</th>
+                <th>Local Authority Description</th>
+                <th>DEIS (Y/N)</th>
+                <th>Irish Classification Description</th>
+                <th>Gaeltacht Indicator (Y/N)</th>
+                <th>Island (Y/N)</th>
+                <th>Ethos Description</th>
+                <th>Female</th>
+                <th>Male</th>
+                <th>Total</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+            <tr>
+                <tr>
+                    <td>2023</td>
+                    <td>00356BB</td>
+                    <td>Greenwood International School</td>
+                    <td>123 Elm Street</td>
+                    <td>West End</td>
+                    <td>Dublin 4</td>
+                    <td>Co. Dublin</td>
+                    <td>dublin</td>
+                    <td>D04 ABC1</td>
+                    <td>53.3350</td>
+                    <td>-6.2510</td>
+                    <td>info@greenwoodschool.ie</td>
+                    <td>+353 1 234 5678</td>
+                    <td>Dr. Fiona O'Reilly</td>
+                    <td>Dublin City Council</td>
+                    <td>No</td>
+                    <td>No subjects through Irish</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Catholic</td>
+                    <td>320</td>
+                    <td>280</td>
+                    <td>600</td>
+                    <td><button onclick="showUpdate(this)">update</button></td>
+                    <td><button onclick="doDelete(this)" >delete</button></td>
+                </tr>
+                
+            </tr> 
+  
+        </table>
+
+
+        <div id="create_update_school"  style="display: none">
+             
+            <h2><span id = "createLabel">Create a new</span><span id= "updateLabel" style="display:none">Update this</span> School</h2>
+            
+            <span><button id = "button-backtomain" onclick= "showViewAll()" >Back</button></span><br/><br/>
+            <form id="create_update_school">
+                <label for="academic_year_enrolment">Academic Year (Enrolment):</label>
+                <input type="text" id="academic_year_enrolment" placeholder="Enter Year"/><br/><br/>
+
+                <label for="roll_number">Roll Number:</label>
+                <input type="text" id="roll_number" placeholder="Enter School Roll Number"/><br/><br/>
+
+                <label for="official_name">Official Name:</label>
+                <input type="text" id="official_name" placeholder="Enter School Name"/><br/><br/>
+
+                <label for="address_line1">Address (Line 1):</label>
+                <input type="text" id="address_line1" placeholder="Enter Address"/><br/><br/>
+
+                <label for="address_line2">Address (Line 2):</label>
+                <input type="text" id="address_line2" placeholder="Enter Address"/><br/><br/>
+
+                <label for="address_line3">Address (Line 3):</label>
+                <input type="text" id="address_line3" placeholder="Enter Address"/><br/><br/>
+
+                <label for="address_line4">Address (Line 4):</label>
+                <input type="text" id="address_line4" placeholder="Enter Address"/><br/><br/>
+
+                <label for="county_description">Select County:</label>
+                <select id="county_description">
+                    <option value="none">Choose an option</option>
+                    <option value="carlow">Carlow</option>
+                    <option value="cavan">Cavan</option>
+                    <option value="clare">Clare</option>
+                    <option value="cork">Cork</option>
+                    <option value="donegal">Donegal</option>
+                    <option value="dublin">Dublin</option>
+                    <option value="galway">Galway</option>
+                    <option value="kerry">Kerry</option>
+                    <option value="kildare">Kildare</option>
+                    <option value="kilkenny">Kilkenny</option>
+                    <option value="laois">Laois</option>
+                    <option value="leitrim">Leitrim</option>
+                    <option value="limerick">Limerick</option>
+                    <option value="longford">Longford</option>
+                    <option value="louth">Louth</option>
+                    <option value="mayo">Mayo</option>
+                    <option value="meath">Meath</option>
+                    <option value="monaghan">Monaghan</option>
+                    <option value="offaly">Offaly</option>
+                    <option value="roscommon">Roscommon</option>
+                    <option value="sligo">Sligo</option>
+                    <option value="tipperary">Tipperary</option>
+                    <option value="waterford">Waterford</option>
+                    <option value="westmeath">Westmeath</option>
+                    <option value="wexford">Wexford</option>
+                    <option value="wicklow">Wicklow</option>
+                </select><br/><br/>
+
+                <label for="eircode">Eircode:</label>
+                <input type="text" id="eircode" placeholder="Enter Eircode"/><br/><br/>
+
+                <label for="latitude">Enter Latitude:</label>
+                <input type="number" id="latitude" placeholder="Enter Latitude" step="any"/><br/><br/>
+
+                <label for="longitude">Enter Longitude:</label>
+                <input type="number" id="longitude" placeholder="Enter Longitude" step="any"/><br/><br/>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter Email"/><br/><br/>
+
+                <label for="phone_number">Enter Phone Number:</label>
+                <input type="tel" id="phone_number" placeholder="Enter phone number"/><br/><br/>
+
+                <label for="principal_name">Principal Name:</label>
+                <input type="text" id="principal_name" placeholder="Enter principal name"/><br/><br/>
+
+                <label for="local_authority_description">Local Authority Description:</label>
+                <input type="text" id="local_authority_description" placeholder="Enter local authority"/><br/><br/>
+
+                <label>DEIS:</label>
+                <input type="radio" name="deis" value="Y" id="deis_y"/>
+                <label for="deis_y">Yes</label>
+                <input type="radio" name="deis" value="N" id="deis_n"/>
+                <label for="deis_n">No</label><br/><br/>
+
+                <label for="irish_classification_description">Select Irish Classification:</label>
+                <select id="irish_classification_description">
+                    <option value="none">Choose an option</option>
+                    <option value="No subjects through Irish">No subjects through Irish</option>
+                    <option value="Some subjects through Irish">Some subjects through Irish</option>
+                    <option value="All subjects through Irish">All subjects through Irish</option>
+                </select><br/><br/>
+
+                <label>Gaeltacht Indicator:</label>
+                <input type="radio" name="gaeltacht_indicator" value="Y" id="gaeltacht_y"/>
+                <label for="gaeltacht_y">Yes</label>
+                <input type="radio" name="gaeltacht_indicator" value="N" id="gaeltacht_n"/>
+                <label for="gaeltacht_n">No</label><br/><br/>
+
+                <label>Island:</label>
+                <input type="radio" name="island" value="Y" id="island_y"/>
+                <label for="island_y">Yes</label>
+                <input type="radio" name="island" value="N" id="island_n"/>
+                <label for="island_n">No</label><br/><br/>
+
+                <label for="ethos_description">Select School Ethos:</label>
+                <select id="ethos_description">
+                    <option value="none">Choose an option</option>
+                    <option value="Catholic">Catholic</option>
+                    <option value="Church Of Ireland">Church Of Ireland</option>
+                    <option value="Multi Denominational">Multi Denominational</option>
+                    <option value="Presbyterian">Presbyterian</option>
+                    <option value="Methodist">Methodist</option>
+                    <option value="Jewish">Jewish</option>
+                    <option value="Muslim">Muslim</option>
+                    <option value="Inter Denominational">Inter Denominational</option>
+                    <option value="Quaker">Quaker</option>
+                </select><br/><br/>
+
+                <label for="female">Number of Female Students:</label>
+                <input type="number" id="female" placeholder="Enter number"/><br/><br/>
+
+                <label for="male">Number of Male Students:</label>
+                <input type="number" id="male" placeholder="Enter number"/><br/><br/>
+
+                <label for="total">Total Number of Students:</label>
+                <input type="number" id="total" placeholder="Enter number"/><br/><br/>
+
+
+                <span><button id = "button-doCreate" onclick="doCreate()">Create</button></span><br/>
+                <span><button id = "button-doUpdate" onclick= "doUpdate()" >Update</button></span><br/><br/>
+                <!--  <div id = "create_sucess" style="display: none">Create sucessful</div>
+                 <div id = "update_sucess" style="display: none">Update sucessful</div> 
+                if time implement -->
+                <span><button id = "button-backtomain" onclick= "showViewAll()" >Back</button></span>
+                <span><button type="reset" id="reset">Clear Form</button></span>
+            </form>
+        </div>
+
+    </body>
+</html>

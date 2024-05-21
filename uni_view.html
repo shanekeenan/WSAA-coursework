@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>View Universities</title>
+    </head>
+    <body>
+        <h1>Universities</h1>
+        <div><button id="button-showCreate" onclick="showCreate()">Create a University</button><br/><br/></div>
+        <div>
+            <table id='universityTable' border="3">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Number of Pupils</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+                <!-- University rows will be dynamically inserted here -->
+            </table>
+            <br/>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                fetchUniversities();
+            });
+
+            function fetchUniversities() {
+                fetch('/universities')
+                    .then(response => response.json())
+                    .then(data => {
+                        const table = document.getElementById('universityTable');
+                        // Clear existing rows (except the header)
+                        while (table.rows.length > 1) {
+                            table.deleteRow(1);
+                        }
+                        data.forEach(university => {
+                            let row = table.insertRow();
+                            row.innerHTML = `
+                                <td>${university.ID}</td>
+                                <td>${university.name}</td>
+                                <td>${university.address}</td>
+                                <td>${university.number_of_pupils}</td>
+                                <td><button onclick="showUpdate(${university.ID})">Update</button></td>
+                                <td><button onclick="deleteUniversity(${university.ID})">Delete</button></td>
+                            `;
+                        });
+                    });
+            }
+
+            function showUpdate(id) {
+                document.getElementById('button-showCreate').style.display = "none";
+                document.getElementById('universityTable').style.display = "none";
+                document.getElementById('createUpdateForm').style.display = "block";
+
+                document.getElementById('createLabel').style.display = "none";
+                document.getElementById('updateLabel').style.display = "inline";
+
+                document.getElementById('button-doCreate').style.display = "none";
+                document.getElementById('button-doUpdate').style.display = "block";
+
+                fetch(`/universities/${id}`)
+                    .then(response => response.json())
+                    .then(university => {
+                        const form = document.getElementById('createUpdateForm');
+                        form.querySelector('input[name="ID"]').value = university.ID;
+                        form.querySelector('input[name="name"]').value = university.name;
+                        form.querySelector('input[name="address"]').value = university.address;
+                        form.querySelector('input[name="number_of_pupils"]').value = university.number_of_pupils;
+                    });
+            }
+
+            function showCreate() {
+                document.getElementById('button-showCreate').style.display = "none";
+                document.getElementById('universityTable').style.display = "none";
+                document.getElementById('createUpdateForm').style.display = "block";
+
+                document.getElementById('createLabel').style.display = "inline";
+                document.getElementById('updateLabel').style.display = "none";
+
+                document.getElementById('button-doCreate').style.display = "block";
+                document.getElementById('button-doUpdate').style.display = "none";
+
+                clearForm();
+            }
+
+            function doCreate() {
+                const university = getUniversityFromForm();
+                fetch('/universities', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(university)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    clearForm();
+                    showViewAll();
+                    fetchUniversities();
+                });
+            }
+
+            function doUpdate() {
+                const university = getUniversityFromForm();
+                fetch(`/universities/${university.ID}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(university)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    clearForm();
+                    showViewAll();
+                    fetchUniversities();
+                });
+            }
+
+            function deleteUniversity(id) {
+                fetch(`/universities/${id}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    fetchUniversities();
+                });
+            }
+
+            function clearForm() {
+                const form = document.getElementById('createUpdateForm');
+                form.querySelector('input[name="ID"]').value = '';
+                form.querySelector('input[name="name"]').value = '';
+                form.querySelector('input[name="address"]').value = '';
+                form.querySelector('input[name="number_of_pupils"]').value = '';
+            }
+
+            function getUniversityFromForm() {
+                const form = document.getElementById('createUpdateForm');
+                return {
+                    ID: form.querySelector('input[name="ID"]').value,
+                    name: form.querySelector('input[name="name"]').value,
+                    address: form.querySelector('input[name="address"]').value,
+                    number_of_pupils: form.querySelector('input[name="number_of_pupils"]').value
+                };
+            }
+
+            function showViewAll() {
+                document.getElementById('button-showCreate').style.display = "block";
+                document.getElementById('universityTable').style.display = "block";
+                document.getElementById('createUpdateForm').style.display = "none";
+
+                document.getElementById('createLabel').style.display = "none";
+                document.getElementById('updateLabel').style.display = "none";
+
+                document.getElementById('button-doCreate').style.display = "none";
+                document.getElementById('button-doUpdate').style.display = "none";
+            }
+        </script>
+
+        <div id='createUpdateForm' style="display: none">
+            <h2><span id="createLabel">Create a</span><span id="updateLabel" style="display:none">Update this</span> University</h2>
+            ID <input type="text" name="ID" readonly><br/>
+            Name <input type="text" name="name"><br/>
+            Address <input type="text" name="address"><br/>
+            Number of Pupils <input type="number" name="number_of_pupils"><br/>
+            <span><button id="button-doCreate" onclick="doCreate()">Create</button></span>
+            <span><button id="button-doUpdate" onclick="doUpdate()">Update</button></span>
+        </div>
+    </body>
+</html>
