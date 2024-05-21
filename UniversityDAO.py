@@ -5,18 +5,17 @@ import mysql.connector
 import dbconfig as cfg
 
 class UniversityDAO:
-    connection=""
-    cursor =''
-    host=       ''
-    user=       ''
-    password=   ''
-    database=   ''
-    
+    connection = None
+    cursor = None
+
     def __init__(self):
-        self.host=       cfg.mysql['host']
-        self.user=       cfg.mysql['user']
-        self.password=   cfg.mysql['password']
-        self.database=   cfg.mysql['database']
+        self.connection = mysql.connector.connect(
+            host=cfg.mysql['host'],
+            user=cfg.mysql['user'],
+            password=cfg.mysql['password'],
+            database=cfg.mysql['database']
+        )
+        self.cursor = self.connection.cursor()
 
    
 
@@ -66,4 +65,4 @@ class UniversityDAO:
         return {keys[i]: resultLine[i] for i in range(len(keys))}
 
 
-UniversityDAO = UniversityDAO()
+universityDAO = UniversityDAO()
