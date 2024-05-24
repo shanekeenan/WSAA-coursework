@@ -1,25 +1,32 @@
 from flask import Flask, jsonify, request, abort
 import pymysql
-from UniversityDAO import universityDAO 
 import mysql.connector
+import universityDAO_pymysql as db 
+from UniversityDAO import universityDAO 
+
 from flask_cors import CORS
+
 
 #app = Flask(__name__, static_url_path='', static_folder='.')
 
 app = Flask(__name__)
 
+CORS(app)
 
+@app.route('/')
+def index():
+        return "Hello Hello"
 
 @app.route('/universities', methods=['GET'])
 def get_all_universities():
     universities = universityDAO.getAll()
-    universityDAO.closeAll()
     return jsonify(universities)
+
 
 @app.route('/universities/<int:id>', methods=['GET'])
 def get_university_by_id(id):
     university = universityDAO.findByID(id)
-    universityDAO.closeAll()
+    
     if university:
         return jsonify(university)
     else:
@@ -43,6 +50,8 @@ def update_university(id):
     university = universityDAO.findByID(id)
     if not university:
         return abort(404, description="University not found")
+
+
 
     if not request.json:
         abort(400, description="Invalid input")

@@ -70,25 +70,32 @@
             <div class="search-section" id = "search">
                 <span><b>Search by county</b></span>
                 <br/>
-                <input id="name" type="text" value="Enter county"/>
-                <button onclick="buttonClicked()">Search</button>
-                <div id="output">Output here</div>
+                <input id="countyInput" type="text" placeholder="Enter county"/>
+                <button onclick="searchByCounty()">Search</button>
+                <div id="countyOutput"></div>
             </div>
             <div class="search-section" id = "search2">
                 <span><b>Search by name</b></span>
                 <br/>
                 <input id="name2" type="text" value="Enter school name"/>
-                <button onclick="buttonClicked()">Search</button>
-                <div id="output4">Output here</div>
+                <button onclick="searchbyname()">Search</button>
+                <div id="output4"></div>
             </div>
         </div><hr>
 
         <br/><br/></div>
       
         <script>  
-            var baseUrl = "http://127.0.0.1:5000";
-            
-            
+             function searchByCounty() {
+                var county = document.getElementById("countyInput").value.trim();
+                console.log(county)
+                getCountyAjax(county)
+
+            }
+
+
+
+
             function showUpdate(buttonElement){ 
                 document.getElementById('search').style.display="none" 
                 document.getElementById('search2').style.display="none" 
@@ -402,8 +409,7 @@
             }
 
 
-
-       
+           
             function setSchoolInRow(rowElement, school) {
                 rowElement.cells[0].firstChild.textContent = school.academic_year_enrolment;
                 rowElement.cells[1].firstChild.textContent = school.roll_number;
@@ -498,11 +504,32 @@
                 });
 
             }
+
+            function getCountyAjax(county_description){
+                $.ajax({
+                    "url": "http://127.0.0.1:5000/schools",
+                    "method":"GET",
+                    "data":"",
+                    "dataType": "JSON",
+                    "success":function(result){
+                        //console.log(result);
+                        for (school of result){
+                            addschoolToTable(school);
+                        }
+                        
+                    },
+                    "error":function(xhr,status,error){
+                        console.log("error: "+status+" msg:"+error);
+                    }
+                });
+
+            }
+
             function createSchoolAjax(school){
-                //var book = {"title":"yoto", "author":"momo","price":800}
+                
                 console.log(JSON.stringify(school));
                 $.ajax({
-                    "url": "/schools",
+                    "url": "http://127.0.0.1:5000/schools",
                     "method":"POST",
                     "data":JSON.stringify(schools),
                     "dataType": "JSON",
@@ -510,7 +537,7 @@
                     "success":function(result){
                         //console.log(result);
                         schoold.id = result.id
-                        addBookToTable(school)
+                        addschoolToTable(school)
                         clearForm()
                         showViewAll()
                     },
@@ -523,7 +550,7 @@
                 //var book = {"title":"yoto", "author":"momo","price":800}
                 console.log(JSON.stringify(school));
                 $.ajax({
-                    "url": "/schools/"+encodeURI(school.id),
+                    "url": "http://127.0.0.1:5000/schools/"+encodeURI(school.roll_number),
                     "method":"PUT",
                     "data":JSON.stringify(school),
                     "dataType": "JSON",
@@ -537,11 +564,11 @@
                     }
                 });
             }
-            function deleteSchoolAjax(id){
+            function deleteSchoolAjax(roll_number){
                 
                 //console.log(JSON.stringify('deleting '+id));
                 $.ajax({
-                    "url": "/schools/"+encodeURI(id),
+                    "url": "http://127.0.0.1:5000/schools/"+encodeURI(roll_number),
                     "method":"DELETE",
                     "data":"",
                     "dataType": "JSON",
