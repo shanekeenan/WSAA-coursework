@@ -505,25 +505,23 @@
 
             }
 
-            function getCountyAjax(county_description){
+            function getCountyAjax(county_description) {
                 $.ajax({
-                    "url": "http://127.0.0.1:5000/schools",
-                    "method":"GET",
-                    "data":"",
-                    "dataType": "JSON",
-                    "success":function(result){
-                        //console.log(result);
-                        for (school of result){
+                    url: "http://127.0.0.1:5000/schools/" + encodeURIComponent(county_description),
+                    method: "GET",
+                    dataType: "json",
+                    success: function(result) {
+                        for (var school of result) {
                             addschoolToTable(school);
                         }
-                        
                     },
-                    "error":function(xhr,status,error){
-                        console.log("error: "+status+" msg:"+error);
+                    error: function(xhr, status, error) {
+                        console.log("error: " + status + " msg:" + error);
                     }
                 });
-
             }
+
+
 
             function createSchoolAjax(school){
                 

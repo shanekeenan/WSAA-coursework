@@ -41,6 +41,8 @@ def get_schools_by_county(county_description):
 
 
 
+
+
 @app.route('/schools', methods=['POST'])
 def create_school():
     if not request.json or not 'name' in request.json:
