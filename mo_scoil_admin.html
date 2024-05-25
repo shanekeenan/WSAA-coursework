@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Mo Scoil </title>
+        <title>Mo Scoil Admin</title>
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <!-- CSS only -->
@@ -60,11 +60,10 @@
     </head>
     <body>
         
-        <div id = "div_header"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> <h1> Mo Scoil </h1> </div>
+        <div id = "div_header"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> <h1> Primary schools in Ireland - Adminstration </h1> </div>
         <div id = "Gov_info">
-            <img src="https://www.gov.ie/static/_reboot/_reboot_app/img/Image_Logo.png" alt="gov.ie" class="logo">
-            <b>Fáilte go dtí an leathanach acmhainne Mo Scoil/     Welcome to the My School resource page   </b>
-            <br/>
+            <img src="https://www.gov.ie/static/_reboot/_reboot_app/img/Image_Logo.png" alt="gov.ie" class="logo"><br/>
+            Adminstration page alows admin users to create, update and delete primary schools in the database <br/>
             Data sourced from Government of Ireland website: <a href="https://www.gov.ie/en/collection/primary-schools/">here</a>       
         </div>        
         <hr>
@@ -74,14 +73,14 @@
                 <button id = "button-showCreate" onclick="showCreate()">Create a new school </button>
             </div>
             <div class="search-section" id = "search">
-                <span><b>Search primary schools by county</b></span>
+                <span><b>Search by county</b></span>
                 <br/>
                 <input id="countyInput" type="text" placeholder="Enter county"/>
                 <button onclick="searchByCounty()">Search</button>
                 <div id="countyOutput"></div>
             </div>
             <div class="search-section" id = "search2">
-                <span><b>Search primary schools by name</b></span>
+                <span><b>Search by name</b></span>
                 <br/>
                 <input id="name2" type="text" value="Enter school name"/>
                 <button onclick="searchbyname()">Search</button>
