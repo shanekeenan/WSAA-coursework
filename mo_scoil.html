@@ -71,7 +71,7 @@
 
         <div class="container">
             <div class="search-section">
-                <button id = "button-showCreate" onclick="showCreate()">Create a new school </button>
+                <button id = "button-showCreate" onclick="showCreate()" style="display: none">Create a new school </button>
             </div>
             <div class="search-section" id = "search">
                 <span><b>Search primary schools by county</b></span>
@@ -79,6 +79,7 @@
                 <input id="countyInput" type="text" placeholder="Enter county"/>
                 <button onclick="searchByCounty()">Search</button>
                 <div id="countyOutput"></div>
+                
             </div>
             <div class="search-section" id = "search2">
                 <span><b>Search primary schools by name</b></span>
@@ -89,19 +90,36 @@
             </div>
         </div><hr>
 
-        <br/><br/></div>
-      
+        <br/><div id="CountDisplay"></div> <br/></div>
+        
         <script>  
              function searchByCounty() {
                 var county = document.getElementById("countyInput").value.trim();
                 console.log(county)
                 getCountyAjax(county)
-                addschoolToTable(county)
-                
+                clearSchoolTable(); 
+                addschoolToTable(county);
+                setTimeout(function() {
+                    displaySchoolTableEntryCount();
+                }, 500); // Delay of 1000 milliseconds (1 second)
+            
 
             }
 
+            function displaySchoolTableEntryCount() {
+                var schoolTable = document.getElementById('SchoolTable');
+                
+                
+                var tbody = schoolTable.querySelector('tbody');
+                var rowCount = tbody.getElementsByTagName('tr').length;
+                console.log(JSON.stringify(rowCount))
+                var entryCountDisplay = document.getElementById('CountDisplay');
+                
+                entryCountDisplay.textContent = "Number of schools found: " + rowCount;
+            }
 
+
+            
 
 
             function showUpdate(buttonElement){ 
@@ -137,7 +155,7 @@
                 console.log("return to main menu ")
                 document.getElementById('search').style.display="block" 
                 document.getElementById('search2').style.display="block" 
-                document.getElementById('button-showCreate').style.display="block" 
+                document.getElementById('button-showCreate').style.display="none" 
                 document.getElementById('SchoolTable').style.display="block"  
                 document.getElementById('create_update_school').style.display="none"
                 document.getElementById('createLabel').style.display="none" 
@@ -405,7 +423,7 @@
         
 
             function doDelete(rollNumber) {
-                var table = document.getElementById('schoolTable');
+                var table = document.getElementById('SchoolTable');
                 var rowElement = findRowByRollNumber(table, rollNumber);
             
                 if (rowElement) {
@@ -446,6 +464,20 @@
             }
         
         
+            function clearSchoolTable() {
+                
+                var schoolTable = document.getElementById('SchoolTable');
+                
+                var rows = schoolTable.getElementsByTagName('tr');
+                    
+                
+                while (rows.length > 1) {
+                        schoolTable.deleteRow(1);
+                    }
+                }
+            
+// Example usage: Clear the table when a button is clicked
+document.getElementById('clearTableButton').addEventListener('click', clearSchoolTable);
 
         
             function clearForm() {
@@ -589,10 +621,16 @@
                     }
                 });
             }
-            // Call the function to load data when the page is ready
+            
         $(document).ready(function() {
-            getAllAjax();  // Load schools when the page is ready
+            getAllAjax();
+            setTimeout(function() {
+                    displaySchoolTableEntryCount();
+            }, 500); // Delay of 1000 milliseconds (1 second)
         });
+            
+              
+       
   
         
         </script>
@@ -792,8 +830,8 @@
                 <input type="number" id="total" placeholder="Enter number"/><br/><br/>
 
 
-                <span><button id = "button-doCreate" onclick="doCreate()">Create</button></span><br/>
-                <span><button id = "button-doUpdate" onclick= "doUpdate()" >Update</button></span><br/><br/>
+                <span><button id = "button-doCreate" onclick="doCreate()" style="display: none">Create</button></span><br/>
+                <span><button id = "button-doUpdate" onclick= "doUpdate()" style="display: none">Update</button></span><br/><br/>
                 <!--  <div id = "create_sucess" style="display: none">Create sucessful</div>
                  <div id = "update_sucess" style="display: none">Update sucessful</div> 
                 if time implement -->
