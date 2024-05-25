@@ -93,17 +93,16 @@
         <br/><div id="CountDisplay"></div> <br/></div>
         
         <script>  
-             function searchByCounty() {
+            function searchByCounty() {
                 var county = document.getElementById("countyInput").value.trim();
                 console.log(county)
                 getCountyAjax(county)
                 clearSchoolTable(); 
                 addschoolToTable(county);
-                setTimeout(function() {
+                
+                setTimeout(function(){
                     displaySchoolTableEntryCount();
-                }, 500); // Delay of 1000 milliseconds (1 second)
-            
-
+                }, 500); 
             }
 
             function displaySchoolTableEntryCount() {
@@ -465,20 +464,13 @@
         
         
             function clearSchoolTable() {
-                
                 var schoolTable = document.getElementById('SchoolTable');
-                
                 var rows = schoolTable.getElementsByTagName('tr');
-                    
-                
                 while (rows.length > 1) {
                         schoolTable.deleteRow(1);
                     }
                 }
             
-// Example usage: Clear the table when a button is clicked
-document.getElementById('clearTableButton').addEventListener('click', clearSchoolTable);
-
         
             function clearForm() {
                 console.log("clearing the form");
@@ -626,7 +618,7 @@ document.getElementById('clearTableButton').addEventListener('click', clearSchoo
             getAllAjax();
             setTimeout(function() {
                     displaySchoolTableEntryCount();
-            }, 500); // Delay of 1000 milliseconds (1 second)
+            }, 500); 
         });
             
               
